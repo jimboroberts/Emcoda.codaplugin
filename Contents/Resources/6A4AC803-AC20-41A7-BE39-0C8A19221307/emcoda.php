@@ -35,7 +35,7 @@ if(strlen(trim($input))>0) {
 		$data = $input;
 		list($email, $link) = explode(",", $data);
 
-		echo encodehash($email,$link);
+		echo encodelink($email,$link);
 		
 }
 
@@ -60,21 +60,12 @@ function escapeencode ($str) {
     return $ret;
 }
 
-function encodehash($href, $text) {
-    $prepend = "";
-    if (preg_match("/^mailto:/", $href)) {
-		$href = preg_replace("/^mailto:/", "", $href);
-		$prepend = "mailto:";
-    }
-    if (preg_match("/^http:\/\//", $href)) {
-		$href = preg_replace("/^http:\/\//", "", $href);
-		list($server,$url) = split("/", $href, 2);
-		$href = $url;
-		$prepend = "http://$server/";
-    }
-    $UserCode = sprintf("<a href=\"%s%s\">%s</a>",
-		$prepend,
-		escapeencode($href), $text);
+function encodelink($href, $text) {
+    $code = sprintf("var s='%s';var r='';for(var i=0;i<s.length;i++,i++){r=r+s.substring(i+1,i+2)+s.substring(i,i+1)}document.write('<a href=\"'+r+'\">%s</a>');", transpose($href), $text);
+    $UserCode = sprintf("%s%s%s",
+    "<SCRIPT type=\"text/javascript\">eval(unescape('",
+    escapeencode($code),
+    "'))</SCRIPT>");
     return $UserCode;
 }
 
