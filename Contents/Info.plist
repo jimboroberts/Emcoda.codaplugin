@@ -45,12 +45,16 @@
 		<dict>
 			<key>fallbackInput</key>
 			<string>none</string>
+			<key>input</key>
+			<string>selection</string>
 			<key>keyEquivalent</key>
 			<string>$^e</string>
 			<key>keyEquivalentConflict</key>
 			<false/>
 			<key>name</key>
 			<string>Emcoda</string>
+			<key>output</key>
+			<string>replaceSelectedText</string>
 			<key>script</key>
 			<string>emcoda.php</string>
 			<key>uuid</key>

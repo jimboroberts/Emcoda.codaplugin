@@ -3,39 +3,40 @@
 /*--------------------------------------------------------------
 emcoda.php
 
-Version:	2.0
+Version:	2.1
 Author:		James Roberts
 Website: 	http://www.method.org.uk
 
-Copyright 2003-2013 James Roberts. 
+Copyright 2003-2014 James Roberts. 
 This code cannot be redistributed for profit without
 permission from http://www.method.org.uk/
 
 More info at: http://www.method.org.uk/
 --------------------------------------------------------------*/
 
-	$input = '';
-	$ext = '';
+$input = '';
+$ext = '';
+
+$fp = fopen("php://stdin", "r");
+while ( $line = fgets($fp, 1024) )
+	$input .= $line;
+fclose($fp);
 	
-	$fp = fopen("php://stdin", "r");
-	while ( $line = fgets($fp, 1024) )
-		$input .= $line;
-	fclose($fp);
-
-	if(strlen(trim($input))>0) {
-
+if(strlen(trim($input))>0) {
 										
 		$comment_open 		= "<!--";
 		$comment_close 		= "-->";
 
 		echo $comment_open;
-		echo " ".trim($input)." ";
+		echo "EMCODA HASHED EMAIL";
 		echo $comment_close;
 		echo "\n";
-		echo $comment_open;
-		echo " /".trim($input)." ";
-		echo $comment_close;
+		
+		$data = $input;
+		list($email, $link) = explode(",", $data);
 
+		echo encodehash($email,$link);
+		
 }
 
 function transpose($str) {
@@ -76,24 +77,5 @@ function encodehash($href, $text) {
 		escapeencode($href), $text);
     return $UserCode;
 }
-  
-function encodelink($href, $text) {
-    $code = sprintf("var s='%s';var r='';for(var i=0;i<s.length;i++,i++){r=r+s.substring(i+1,i+2)+s.substring(i,i+1)}document.write('<a href=\"'+r+'\">%s</a>');", transpose($href), $text);
-    $UserCode = sprintf("%s%s%s",
-    "<SCRIPT type=\"text/javascript\">eval(unescape('",
-    escapeencode($code),
-    "'))</SCRIPT>");
-    return $UserCode;
-}
 
-function encodelink_delayed($href, $text) {
-	static $usecount = 0;
-	$usecount++;
-	$code = sprintf("function pgregg_transpose%d(h) {var s='%s';var r='';for(var i=0;i<s.length;i++,i++){r=r+s.substring(i+1,i+2)+s.substring(i,i+1)}h.href=r;}document.write('<a href=\"#\" onMouseOver=\"javascript:pgregg_transpose%d(this)\" onFocus=\"javascript:pgregg_transpose%d(this)\">%s</a>');", $usecount, transpose($href), $usecount, $usecount, $text);
-	$UserCode = sprintf("%s%s%s",
-        "<SCRIPT type=\"text/javascript\">eval(unescape('",
-        escapeencode($code),
-        "'))</SCRIPT>");
-    return $UserCode;
-}
 ?>
