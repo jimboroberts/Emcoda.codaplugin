@@ -32,10 +32,15 @@ if(strlen(trim($input))>0) {
 		echo $comment_close;
 		echo "\n";
 		
-		$data = $input;
-		list($email, $link) = explode(",", $data);
-
-		echo encodelink($email,$link);
+		$data = explode(",", $input);		
+		
+		if(isset($data[1])){
+			$link = $data[1];
+		} else {
+			$link = $data[0];
+		}
+	
+		echo encodelink('mailto:'.$data[0], $link);
 		
 }
 
@@ -59,7 +64,7 @@ function escapeencode ($str) {
       $ret .= sprintf("%%%X", $char);
     return $ret;
 }
-
+  
 function encodelink($href, $text) {
     $code = sprintf("var s='%s';var r='';for(var i=0;i<s.length;i++,i++){r=r+s.substring(i+1,i+2)+s.substring(i,i+1)}document.write('<a href=\"'+r+'\">%s</a>');", transpose($href), $text);
     $UserCode = sprintf("%s%s%s",
