@@ -40,3 +40,11 @@ You can also embed the link text by sepeating by a comma:
 ``email@domain.com, Click here to email us`` 
 
 Select emcoda from the plug-ins menu. Emcoda will convert the copy into encrypted JavaScript, helping us reduce the chances of future spam attacks. 
+
+
+Discuss
+-------
+
+Join the conversation in our public Gitter chat room.
+
+[![Gitter chat](https://badges.gitter.im/jimboroberts/Emcoda.codaplugin.png)](https://gitter.im/jimboroberts/Emcoda.codaplugin)
